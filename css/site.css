@@ -1,0 +1,71 @@
+:root {
+    --tz-navy: #0f172a;
+    --tz-slate: #1e293b;
+    --tz-blue: #2563eb;
+    --tz-cyan: #06b6d4;
+}
+
+body {
+    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+.fw-extrabold {
+    font-weight: 800;
+}
+
+/* Header & Navigation Bar */
+.tz-navbar {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.tz-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 600;
+    font-size: 0.94rem;
+    transition: all 0.2s ease;
+}
+
+.tz-navbar .nav-link:hover,
+.tz-navbar .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(56, 189, 248, 0.16);
+}
+
+/* Hero Banner */
+.tz-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #0f172a 100%);
+    position: relative;
+}
+
+/* Icon Circle */
+.tz-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Card Hover Effects */
+.tz-card-hover {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.tz-card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09) !important;
+}
+
+/* Footer */
+.tz-footer {
+    background-color: #0f172a;
+}
+
+.hover-white:hover {
+    color: #ffffff !important;
+}
