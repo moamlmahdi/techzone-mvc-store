@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>متجر تك زون (TechZone Store) - نسخة العرض المباشر (HTML/CSS/JS)</title>
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 RTL & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="css/site.css" />
+    <style>
+        .spa-section { display: none; animation: fadeIn 0.25s ease-in-out; }
+        .spa-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .cursor-pointer { cursor: pointer; }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <!-- Requirement #4: Header with Project Logo + Navigation Menu across all pages -->
+    <header class="sticky-top shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark tz-navbar py-3">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2 fw-bold cursor-pointer" onclick="showSection('home')">
+                    <div class="tz-logo-box d-flex align-items-center justify-content-center">
+                        <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="10" fill="url(#tz_grad_static)" />
+                            <path d="M11 14H29M17 14V27M23 14L19 21H26L22 27" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="13" cy="26" r="2" fill="#38BDF8"/>
+                            <defs>
+                                <linearGradient id="tz_grad_static" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#2563EB"/>
+                                    <stop offset="1" stop-color="#06B6D4"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="fs-5 d-block lh-1 text-white">تك زون | TechZone</span>
+                        <small class="text-info fw-normal" style="font-size: 0.72rem;">ASP.NET MVC & SQL Tech Store</small>
+                    </div>
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#staticNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="staticNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1 ms-lg-4">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 rounded-pill active cursor-pointer" id="nav-home" onclick="showSection('home')">
+                                <i class="bi bi-house-door-fill me-1"></i> الرئيسية (Home - 4W)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 rounded-pill cursor-pointer" id="nav-plan" onclick="showSection('plan')">
+                                <i class="bi bi-diagram-3-fill me-1"></i> خطة المشروع (Project Plan)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 rounded-pill cursor-pointer" id="nav-products" onclick="showSection('products')">
+                                <i class="bi bi-laptop me-1"></i> المنتجات (SQL Catalog)
+                            </a>
+                        </li>
+                        <li class="nav-item d-none" id="nav-add-item">
+                            <a class="nav-link px-3 rounded-pill text-warning fw-bold cursor-pointer" onclick="openProductModal()">
+                                <i class="bi bi-plus-circle-fill me-1"></i> إضافة منتج (Admin)
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Current User / Role Status -->
+                    <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0" id="authHeaderArea">
+                        <!-- Rendered dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Notification Toast Bar -->
+    <div class="container mt-3 d-none" id="notificationBox">
+        <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between rounded-4 py-2 px-3">
+            <div><i class="bi bi-check-circle-fill me-2"></i><span id="notificationText"></span></div>
+            <button type="button" class="btn-close" onclick="document.getElementById('notificationBox').classList.add('d-none')"></button>
+        </div>
+    </div>
+
+    <main class="flex-grow-1 pb-5">
+        <!-- ==================== 1. HOME SECTION (WHO, WHAT, WHY, WHERE) ==================== -->
+        <section id="section-home" class="spa-section active">
+            <div class="tz-hero text-white py-5 mb-5">
+                <div class="container py-3">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-7">
+                            <span class="badge bg-info text-dark rounded-pill px-3 py-2 fw-bold mb-3">
+                                <i class="bi bi-stars me-1"></i> مشروع ويب ASP.NET MVC + SQL + HTML/CSS/JS
+                            </span>
+                            <h1 class="display-5 fw-extrabold mb-3 lh-base">
+                                أهلاً بك في منصة <span class="text-info">تك زون (TechZone)</span> للمنتجات التقنية
+                            </h1>
+                            <p class="lead text-light opacity-75 mb-4">
+                                منصة إلكترونية متكاملة مبنية بمعمارية MVC وقاعدة بيانات SQL، تتيح للمستخدم (User) قراءة وتصفح المنتجات، وتمنح المدير (Admin) صلاحية الإضافة والتعديل والحذف.
+                            </p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <button onclick="showSection('products')" class="btn btn-info btn-lg rounded-pill px-4 fw-bold text-dark shadow">
+                                    <i class="bi bi-grid-fill me-2"></i> تصفح المنتجات التقنية
+                                </button>
+                                <button onclick="showSection('plan')" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                                    <i class="bi bi-diagram-3 me-2"></i> خطة المشروع والهيكل
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="card bg-dark bg-opacity-50 border border-info border-opacity-25 rounded-4 p-4 shadow-lg text-white">
+                                <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary border-opacity-50">
+                                    <span class="fw-bold text-info"><i class="bi bi-shield-check me-2"></i>نظام الصلاحيات والأدوار</span>
+                                    <span class="badge bg-success">متصل بقاعدة البيانات</span>
+                                </div>
+                                <div class="row g-3 text-center">
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-white bg-opacity-10 h-100">
+                                            <i class="bi bi-person-gear fs-2 text-warning d-block mb-2"></i>
+                                            <h6 class="fw-bold mb-1">صلاحية Admin</h6>
+                                            <p class="small text-light opacity-75 mb-0">إضافة + تعديل + حذف + قراءة المنتجات</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 rounded-3 bg-white bg-opacity-10 h-100">
+                                            <i class="bi bi-person-badge fs-2 text-info d-block mb-2"></i>
+                                            <h6 class="fw-bold mb-1">صلاحية User</h6>
+                                            <p class="small text-light opacity-75 mb-0">قراءة وتصفح وبحث في المنتجات فقط</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requirement #5: The 4 Questions (Who, What, Why, Where) -->
+            <div class="container mb-5">
+                <div class="text-center mb-5">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">المتطلب الخامس (Requirement #5)</span>
+                    <h2 class="fw-bold">الإجابة على الأسئلة الأربعة (Who - What - Why - Where)</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 tz-card-hover p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="tz-icon-circle bg-primary bg-opacity-10 text-primary"><i class="bi bi-people-fill fs-3"></i></div>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill mb-1">1. WHO?</span>
+                                    <h4 class="fw-bold mb-0">مَن نحن ومَن يخدم المشروع؟ (Who)</h4>
+                                </div>
+                            </div>
+                            <p class="text-secondary lh-lg mb-0">
+                                نحن فريق تطوير منصة <strong>TechZone</strong> للتجارة التقنية. يخدم المشروع كلاً من <strong>مديري النظام (Admins)</strong> المسؤولين عن إدارة المخزون وقاعدة البيانات، و<strong>المستخدمين (Users)</strong> من طلاب ومبرمجين ومهتمين بالتقنية الباحثين عن مواصفات وأسعار الأجهزة الحديثة.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 tz-card-hover p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="tz-icon-circle bg-info bg-opacity-10 text-info"><i class="bi bi-laptop-fill fs-3"></i></div>
+                                <div>
+                                    <span class="badge bg-info text-dark rounded-pill mb-1">2. WHAT?</span>
+                                    <h4 class="fw-bold mb-0">ماذا يقدم المشروع؟ (What)</h4>
+                                </div>
+                            </div>
+                            <p class="text-secondary lh-lg mb-0">
+                                تطبيق ويب مبني بـ <strong>ASP.NET Core MVC</strong> وقاعدة بيانات <strong>SQL</strong> مع واجهات HTML5/CSS3/JS، يقدم كتالوجاً تفاعلياً للمنتجات التقنية مع نظام صلاحيات يفصل بين القراءة فقط (User) والإدارة الكاملة للحذف والإضافة والتعديل (Admin).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 tz-card-hover p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="tz-icon-circle bg-success bg-opacity-10 text-success"><i class="bi bi-bullseye fs-3"></i></div>
+                                <div>
+                                    <span class="badge bg-success rounded-pill mb-1">3. WHY?</span>
+                                    <h4 class="fw-bold mb-0">لماذا تم بناء هذا المشروع؟ (Why)</h4>
+                                </div>
+                            </div>
+                            <p class="text-secondary lh-lg mb-0">
+                                لتوفير مصدر موثوق ومنظم لعرض الأجهزة التقنية ومواصفاتها، وحماية قاعدة البيانات من التعديلات غير المصرح بها عبر حصر عمليات الإضافة والتعديل والحذف بمدير النظام فقط.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 tz-card-hover p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="tz-icon-circle bg-warning bg-opacity-10 text-warning"><i class="bi bi-globe-americas fs-3"></i></div>
+                                <div>
+                                    <span class="badge bg-warning text-dark rounded-pill mb-1">4. WHERE?</span>
+                                    <h4 class="fw-bold mb-0">أين يعمل المشروع وأين يتوفر؟ (Where)</h4>
+                                </div>
+                            </div>
+                            <p class="text-secondary lh-lg mb-0">
+                                يعمل عبر متصفحات الويب على كافة الأجهزة (حواسيب، هواتف ذكية، أجهزة لوحية) ومهيأ للرفع والاستضافة على السيرفرات السحابية المجانية ليكون متاحاً في أي مكان.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2. PROJECT PLAN SECTION ==================== -->
+        <section id="section-plan" class="spa-section">
+            <div class="container py-5">
+                <div class="card border-0 rounded-4 shadow-sm tz-hero text-white p-4 p-md-5 mb-5">
+                    <span class="badge bg-warning text-dark rounded-pill align-self-start px-3 py-2 fw-bold mb-3">المتطلب السادس (Requirement #6)</span>
+                    <h1 class="fw-extrabold mb-2">خطة المشروع (Project Plan)</h1>
+                    <p class="lead opacity-75 mb-0">الجمهور المستهدف (Target Audience) • الأهداف (Goals & Objectives) • الهيكل المستخدم (Structure Used)</p>
+                </div>
+
+                <!-- Target Audience -->
+                <h3 class="fw-bold mb-3"><i class="bi bi-people-fill text-primary me-2"></i>1. الجمهور المستهدف (Target Audience)</h3>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                            <h5 class="fw-bold text-primary">الطلاب والباحثون</h5>
+                            <p class="text-secondary small mb-0">الراغبون في مقارنة الحواسيب المحمولة والأجهزة اللوحية المناسبة للدراسة والبرمجة ضمن ميزانيات محددة.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                            <h5 class="fw-bold text-info">المبرمجون والمصممون</h5>
+                            <p class="text-secondary small mb-0">المهتمون بالمواصفات التقنية الدقيقة للشاشات، المعالجات، والملحقات الاحترافية.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                            <h5 class="fw-bold text-warning">إدارة المتجر (Admins)</h5>
+                            <p class="text-secondary small mb-0">المشرفون المسؤولون عن تحديث البيانات والأسعار وإضافة أو حذف المنتجات من قاعدة بيانات SQL.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Goals & Objectives -->
+                <h3 class="fw-bold mb-3"><i class="bi bi-bullseye text-success me-2"></i>2. الهدف والأهداف التفصيلية (Goals and Objectives)</h3>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 border-top border-4 border-success">
+                            <h5 class="fw-bold text-success">الهدف العام (Main Goal)</h5>
+                            <p class="text-secondary mb-0">بناء تطبيق ويب متكامل بـ ASP.NET Core MVC وقاعدة بيانات SQL يعرض المنتجات التقنية بواجهة عصرية، ويطبق نظام صلاحيات صارم بين الـ Admin والـ User.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 border-top border-4 border-primary">
+                            <h5 class="fw-bold text-primary">الأهداف التفصيلية (Objectives)</h5>
+                            <ul class="text-secondary small mb-0 d-grid gap-2">
+                                <li>تطبيق نمط MVC للفصل بين Models و Views و Controllers.</li>
+                                <li>بناء قاعدة بيانات SQL لتخزين المستخدمين والمنتجات.</li>
+                                <li>حصر عمليات الإضافة والتعديل والحذف بـ Admin فقط، والقراءة للـ User.</li>
+                                <li>توفير صفحات Login و Register وتجهيز المشروع للاستضافة المجانية.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Structure Used -->
+                <h3 class="fw-bold mb-3"><i class="bi bi-layers-fill text-info me-2"></i>3. الهيكل المستخدم (Structure Used - MVC Architecture)</h3>
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <div class="row g-4 text-center">
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-4 bg-primary bg-opacity-10 h-100">
+                                <h5 class="fw-bold text-primary">Model + SQL Data</h5>
+                                <p class="small text-secondary mb-0"><code>Product.cs</code>, <code>AppUser.cs</code>, <code>SqlDatabaseService.cs</code>, <code>Schema.sql</code></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-4 bg-info bg-opacity-10 h-100">
+                                <h5 class="fw-bold text-dark">View (HTML/CSS/JS/Razor)</h5>
+                                <p class="small text-secondary mb-0"><code>_Layout.cshtml</code>, <code>Home/Index</code>, <code>Home/ProjectPlan</code>, <code>Products/*</code>, <code>Account/*</code></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-4 bg-warning bg-opacity-10 h-100">
+                                <h5 class="fw-bold text-dark">Controller (C# Logic)</h5>
+                                <p class="small text-secondary mb-0"><code>HomeController.cs</code>, <code>ProductsController.cs</code>, <code>AccountController.cs</code></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. PRODUCTS CATALOG SECTION (ADMIN CRUD vs USER READ) ==================== -->
+        <section id="section-products" class="spa-section">
+            <div class="container py-5">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">
+                            <i class="bi bi-database-fill-check me-1"></i> المتطلب الثاني والثالث (SQL CRUD & Role Permissions)
+                        </span>
+                        <h2 class="fw-extrabold mb-1">كتالوج المنتجات التقنية</h2>
+                        <p class="text-muted mb-0" id="rolePermissionHint"></p>
+                    </div>
+                    <button id="btnAddProductTop" onclick="openProductModal()" class="btn btn-primary btn-lg rounded-pill px-4 fw-bold d-none">
+                        <i class="bi bi-plus-circle-fill me-1"></i> إضافة منتج جديد (Admin)
+                    </button>
+                </div>
+
+                <!-- Search & Category Filter -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+                    <div class="row g-2">
+                        <div class="col-md-8">
+                            <input type="text" id="searchBox" oninput="renderProducts()" class="form-control bg-light" placeholder="ابحث باسم المنتج أو الشركة أو الوصف..." />
+                        </div>
+                        <div class="col-md-4">
+                            <select id="categoryFilter" onchange="renderProducts()" class="form-select bg-light">
+                                <option value="">-- جميع التصنيفات --</option>
+                                <option value="حواسيب محمولة">حواسيب محمولة</option>
+                                <option value="هواتف ذكية">هواتف ذكية</option>
+                                <option value="شاشات العرض">شاشات العرض</option>
+                                <option value="صوتيات وملحقات">صوتيات وملحقات</option>
+                                <option value="أجهزة لوحية">أجهزة لوحية</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4" id="productsContainer"></div>
+            </div>
+        </section>
+
+        <!-- ==================== 4. LOGIN SECTION ==================== -->
+        <section id="section-login" class="spa-section">
+            <div class="container py-5">
+                <div class="row justify-content-center g-4">
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 h-100">
+                            <div class="text-center mb-4">
+                                <div class="tz-icon-circle bg-primary text-white mx-auto mb-3"><i class="bi bi-person-lock fs-3"></i></div>
+                                <h3 class="fw-extrabold mb-1">تسجيل الدخول (Login)</h3>
+                                <p class="text-muted small">ادخل بحساب Admin للإدارة أو بحساب User للقراءة فقط</p>
+                            </div>
+                            <form onsubmit="handleLogin(event)">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">اسم المستخدم أو البريد الإلكتروني</label>
+                                    <input type="text" id="spaLoginUser" class="form-control" required placeholder="admin أو user" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">كلمة المرور</label>
+                                    <input type="password" id="spaLoginPass" class="form-control" required placeholder="••••••••" />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill fw-bold mb-3">تسجيل الدخول</button>
+                                <div class="text-center small">
+                                    ليس لديك حساب؟ <a class="text-primary fw-bold cursor-pointer" onclick="showSection('register')">إنشاء حساب User جديد</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 h-100 bg-dark text-white">
+                            <h4 class="fw-bold text-info mb-3">بيانات الدخول التجريبية</h4>
+                            <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-warning mb-3">
+                                <div class="fw-bold text-warning mb-1">حساب Admin (إضافة + تعديل + حذف)</div>
+                                <div class="small mb-2">المستخدم: <code>admin</code> | كلمة المرور: <code>Admin@123</code></div>
+                                <button class="btn btn-warning btn-sm rounded-pill w-100 fw-bold text-dark" onclick="quickLogin('admin','Admin@123')">دخول فوري كـ Admin</button>
+                            </div>
+                            <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-info">
+                                <div class="fw-bold text-info mb-1">حساب User (قراءة فقط Read-Only)</div>
+                                <div class="small mb-2">المستخدم: <code>user</code> | كلمة المرور: <code>User@123</code></div>
+                                <button class="btn btn-info btn-sm rounded-pill w-100 fw-bold text-dark" onclick="quickLogin('user','User@123')">دخول فوري كـ User</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 5. REGISTER SECTION ==================== -->
+        <section id="section-register" class="spa-section">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+                            <div class="text-center mb-4">
+                                <div class="tz-icon-circle bg-info text-dark mx-auto mb-3"><i class="bi bi-person-plus-fill fs-3"></i></div>
+                                <span class="badge bg-info text-dark rounded-pill px-3 py-1 mb-2">المتطلب السابع (Requirement #7)</span>
+                                <h3 class="fw-extrabold mb-1">إنشاء حساب جديد للـ User</h3>
+                                <p class="text-muted small">يُمنح الحساب الجديد صلاحية القراءة والتصفح (User Read-Only)</p>
+                            </div>
+                            <form onsubmit="handleRegister(event)">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">الاسم الكامل</label>
+                                    <input type="text" id="regFullName" class="form-control" required placeholder="أدخل اسمك الكامل" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">اسم المستخدم</label>
+                                    <input type="text" id="regUsername" class="form-control" required placeholder="مثال: ali_user" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">البريد الإلكتروني</label>
+                                    <input type="email" id="regEmail" class="form-control" required placeholder="name@example.com" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">كلمة المرور</label>
+                                    <input type="password" id="regPassword" class="form-control" required minlength="6" placeholder="6 خانات على الأقل" />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill fw-bold">إنشاء حساب User الآن</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Admin Modal for Add / Edit Product -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold" id="productModalTitle">إضافة منتج تقني (Admin)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form onsubmit="saveProduct(event)">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="prodId" />
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">اسم المنتج</label>
+                                <input type="text" id="prodName" class="form-control" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">الفئة</label>
+                                <select id="prodCategory" class="form-select" required>
+                                    <option value="حواسيب محمولة">حواسيب محمولة</option>
+                                    <option value="هواتف ذكية">هواتف ذكية</option>
+                                    <option value="شاشات العرض">شاشات العرض</option>
+                                    <option value="صوتيات وملحقات">صوتيات وملحقات</option>
+                                    <option value="أجهزة لوحية">أجهزة لوحية</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">العلامة التجارية (Brand)</label>
+                                <input type="text" id="prodBrand" class="form-control" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">السعر (ر.س)</label>
+                                <input type="number" step="0.01" id="prodPrice" class="form-control" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">الكمية المتوفرة</label>
+                                <input type="number" id="prodStock" class="form-control" required />
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">رابط الصورة</label>
+                                <input type="text" id="prodImage" class="form-control" />
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">الوصف والمواصفات</label>
+                                <textarea id="prodDesc" rows="3" class="form-control" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">حفظ في قاعدة البيانات</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="tz-footer text-light py-4 mt-auto border-top">
+        <div class="container text-center small text-secondary">
+            متجر تك زون (TechZone Store) — مشروع ASP.NET Core MVC & SQL مع واجهات HTML5 / CSS3 / JS
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/standalone-app.js"></script>
+</body>
+</html>
